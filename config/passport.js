@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
@@ -31,21 +32,44 @@ module.exports = app => {
   }, (accessToken, refreshToken, profile, done) => {
      const { name, email } = profile._json
      User.findOne({ where: { email } })
-       .then(user => {
+        .then(user => {
+          if (user) return done(null, user)
+          const randomPassword = Math.random().toString(36).slice(-8)
+          bcrypt
+            .genSalt(10)
+            .then(salt => bcrypt.hash(randomPassword, salt))
+            .then(hash =>  User.create({
+              name,
+              email,
+              password: hash
+            }))
+            .then(user => done(null,user))
+            .catch(err => done(err, false))       
+        })
+  }))
+
+  passport.use(new GoogleStrategy({
+    clientID: '1074980343957-c0ie7q6orbogovdegkps8935h0hrs3c5.apps.googleusercontent.com',
+    clientSecret: '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',
+    callbackURL:"http://localhost:3000/auth/google/callback",
+    profileFields: ['email', 'displayName']
+    }, (accessToken, refreshToken, profile, done) => {
+      const { email, name } = profile._json
+       User.findOne({ where: { email } }).then(user => {
          if (user) return done(null, user)
          const randomPassword = Math.random().toString(36).slice(-8)
          bcrypt
            .genSalt(10)
            .then(salt => bcrypt.hash(randomPassword, salt))
-           .then(hash =>  User.create({
+           .then(hash => User.create({
              name,
              email,
              password: hash
-       }))
-            .then(user => done(null,user))
-            .catch(err => done(err, false))       
-          })
-  }))
+           }))
+           .then(user => done(null, user))
+           .catch(err => done(err, false))
+        })
+    }))
 
   passport.serializeUser((user, done) => {
     done(null, user.id)
