@@ -7,7 +7,7 @@ const User = db.User
 
 
 router.get('/login', (req, res) => {
-  res.render("login")
+  res.render('login')
 })
 
 router.post('/login', passport.authenticate('local', {
@@ -49,7 +49,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout()
-  res.redirect('/login')
+  res.redirect('login')
 })
 
 module.exports = router
