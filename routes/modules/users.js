@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs')
 const db = require('../../models')
 const User = db.User
 
-
 router.get('/login', (req, res) => {
   res.render('login')
 })
@@ -23,7 +22,7 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
-  const errors =[]
+  const errors = []
   User.findOne({ where: { email } }).then((user) => {
     if (!name || !email || !password || !confirmPassword) {
       errors.push({ message: '每一個欄位都要填寫喔!' })
@@ -41,13 +40,13 @@ router.post('/register', (req, res) => {
       })
     }
     if (user) {
-      errors.push({ message: '此帳號己經註冊過了，請更改。'})
+      errors.push({ message: '此帳號己經註冊過了，請更改。' })
       return res.render('register', {
         errors,
         name,
         email,
         password,
-        confirmPassword,
+        confirmPassword
       })
     }
     return bcrypt
@@ -57,7 +56,7 @@ router.post('/register', (req, res) => {
         User.create({
           name,
           email,
-          password: hash,
+          password: hash
         })
       )
       .then(() => res.redirect('/'))

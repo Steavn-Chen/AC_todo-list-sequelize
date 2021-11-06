@@ -24,8 +24,7 @@ router.get('/github', passport.authenticate('github', {
   scope: ['email', 'profile']
 }))
 
-router.get('/github/callback', 
-  passport.authenticate('github', {
+router.get('/github/callback', passport.authenticate('github', {
     successRedirect: '/',
     failureRedirect: '/users/login'
   }))

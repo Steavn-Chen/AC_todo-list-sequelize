@@ -28,7 +28,7 @@ module.exports = app => {
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
-    callbackURL:  process.env.FACEBOOK_CALLBACK,
+    callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
      const { name, email } = profile._json
@@ -39,13 +39,13 @@ module.exports = app => {
           bcrypt
             .genSalt(10)
             .then(salt => bcrypt.hash(randomPassword, salt))
-            .then(hash =>  User.create({
+            .then(hash => User.create({
               name,
               email,
               password: hash
             }))
-            .then(user => done(null,user))
-            .catch(err => done(err, false))       
+            .then(user => done(null, user))
+            .catch(err => done(err, false))    
         })
   }))
 
@@ -71,11 +71,11 @@ module.exports = app => {
            .catch(err => done(err, false))
         })
     }))
-  
+
   passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_ID,
     clientSecret: process.env.GITHUB_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK,
+    callbackURL: process.env.GITHUB_CALLBACK
     // profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
     const { login, node_id } = profile._json
@@ -106,5 +106,3 @@ module.exports = app => {
       }).catch(err => done(err, null))
   })
 }
-
-

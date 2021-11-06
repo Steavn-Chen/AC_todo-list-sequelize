@@ -11,9 +11,9 @@ router.get('/', (req, res) => {
     where: { UserId: userId }
   })
     .then((todos) => {
-      return res.render('index', { todos: todos });
+      return res.render('index', { todos: todos })
     })
-    .catch((error) => res.status(422).json(error));
-});
+    .catch((error) => res.status(422).json(error))
+})
 
 module.exports = router

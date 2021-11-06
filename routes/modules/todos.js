@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
   const name = req.body.name
   return Todo.create({
     name,
-    UserId: userId,
+    UserId: userId
   })
     .then(() => res.redirect('/'))
     .catch((err) => console.log(err))
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = req.params.id
   const UserId = req.user.id
-  return Todo.findOne({ where:{ id, UserId } })
+  return Todo.findOne({ where: { id, UserId } })
     .then((todo) => res.render('detail', { todo: todo.toJSON() }))
     .catch((error) => console.log(error))
 })
@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
   const UserId = req.user.id
-  return Todo.findOne({ where:{ id, UserId } })
+  return Todo.findOne({ where: { id, UserId } })
     .then((todo) => res.render('edit', { todo: todo.toJSON() }))
     .catch((err) => console.log(err))
 })
@@ -38,9 +38,10 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   const { name, isDone } = req.body
   const UserId = req.user.id
-  return Todo.findOne({  where: { id, UserId } })
+  return Todo.findOne({ where: { id, UserId } })
     .then((todo) => {
-      (todo.name = name), (todo.isDone = isDone === 'on')
+      todo.name = name
+      todo.isDone = isDone === 'on'
       return todo.save()
     })
     .then(() => res.redirect('/'))
@@ -50,8 +51,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id
   const UserId = req.user.id
-  console.log(id, UserId)
-  return Todo.findOne({  where: { id, UserId } })
+  return Todo.findOne({ where: { id, UserId } })
     .then((todo) => todo.destroy())
     .then(() => res.redirect('/'))
     .catch((err) => console.log(err))
