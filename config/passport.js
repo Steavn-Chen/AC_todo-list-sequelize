@@ -26,9 +26,9 @@ module.exports = app => {
   }))
 
   passport.use(new FacebookStrategy({
-    clientID: '927929051180387',
-    clientSecret: '68a636c0b4deef2edf9ab3a57852b864',
-    callbackURL:"http://localhost:3000/auth/facebook/callback",
+    clientID: process.env.FACEBOOK_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
+    callbackURL:  process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
      const { name, email } = profile._json
@@ -50,9 +50,9 @@ module.exports = app => {
   }))
 
   passport.use(new GoogleStrategy({
-    clientID: '1074980343957-c0ie7q6orbogovdegkps8935h0hrs3c5.apps.googleusercontent.com',
-    clientSecret: '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',
-    callbackURL:"http://localhost:3000/auth/google/callback",
+    clientID: process.env.GOOGLE_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK,
     profileFields: ['email', 'displayName']
     }, (accessToken, refreshToken, profile, done) => {
       const { email, name } = profile._json
@@ -73,9 +73,9 @@ module.exports = app => {
     }))
   
   passport.use(new GitHubStrategy({
-    clientID: 'fcb60b43fdc10293effb',
-    clientSecret: 'd6a1008d366cc9093d7b64683d0b77bd502d872c',
-    callbackURL: "http://localhost:3000/auth/github/callback",
+    clientID: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: process.env.GITHUB_CALLBACK,
     // profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
     const { login, node_id } = profile._json
