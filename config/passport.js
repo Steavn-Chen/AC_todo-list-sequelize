@@ -31,51 +31,51 @@ module.exports = app => {
     callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
-     const { name, email } = profile._json
-     User.findOne({ where: { email } })
-        .then(user => {
-          if (user) return done(null, user)
-          const randomPassword = Math.random().toString(36).slice(-8)
-          bcrypt
-            .genSalt(10)
-            .then(salt => bcrypt.hash(randomPassword, salt))
-            .then(hash => User.create({
-              name,
-              email,
-              password: hash
-            }))
-            .then(user => done(null, user))
-            .catch(err => done(err, false))
-        })
+    const { name, email } = profile._json
+    User.findOne({ where: { email } })
+      .then(user => {
+        if (user) return done(null, user)
+        const randomPassword = Math.random().toString(36).slice(-8)
+        bcrypt
+          .genSalt(10)
+          .then(salt => bcrypt.hash(randomPassword, salt))
+          .then(hash => User.create({
+            name,
+            email,
+            password: hash
+          }))
+          .then(user => done(null, user))
+          .catch(err => done(err, false))
+      })
   }))
 
   passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_ID,
-    clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CLIENT_CALLBACK,
     profileFields: ['email', 'displayName']
-    }, (accessToken, refreshToken, profile, done) => {
-      const { email, name } = profile._json
-       User.findOne({ where: { email } }).then(user => {
-         if (user) return done(null, user)
-         const randomPassword = Math.random().toString(36).slice(-8)
-         bcrypt
-           .genSalt(10)
-           .then(salt => bcrypt.hash(randomPassword, salt))
-           .then(hash => User.create({
-             name,
-             email,
-             password: hash
-           }))
-           .then(user => done(null, user))
-           .catch(err => done(err, false))
-        })
-    }))
+  }, (accessToken, refreshToken, profile, done) => {
+    const { email, name } = profile._json
+    User.findOne({ where: { email } }).then(user => {
+      if (user) return done(null, user)
+      const randomPassword = Math.random().toString(36).slice(-8)
+      bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(randomPassword, salt))
+        .then(hash => User.create({
+          name,
+          email,
+          password: hash
+        }))
+        .then(user => done(null, user))
+        .catch(err => done(err, false))
+    })
+  }))
 
   passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_ID,
-    clientSecret: process.env.GITHUB_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.GITHUB_CLIENT_CALLBACK
     // profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
     const { login, node_id } = profile._json
@@ -83,15 +83,15 @@ module.exports = app => {
       if (user) return done(null, user)
       const randomPassword = Math.random().toString(36).slice(-8)
       bcrypt
-      .genSalt(10)
-      .then(salt => bcrypt.hash(randomPassword, salt))
-      .then(hash => User.create({
-        name: login,
-        email: node_id,
-        password: hash
-      }))
-      .then(user => done(null, user))
-      .catch(err => done(err, false))
+        .genSalt(10)
+        .then(salt => bcrypt.hash(randomPassword, salt))
+        .then(hash => User.create({
+          name: login,
+          email: node_id,
+          password: hash
+        }))
+        .then(user => done(null, user))
+        .catch(err => done(err, false))
     })
   }))
 

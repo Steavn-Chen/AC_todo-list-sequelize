@@ -10,11 +10,10 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login',
-    failureMessage: true
-  })
-)
+  successRedirect: '/',
+  failureRedirect: '/users/login',
+  failureMessage: true
+}))
 
 router.get('/register', (req, res) => {
   res.render('register')

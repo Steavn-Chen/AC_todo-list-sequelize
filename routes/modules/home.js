@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     where: { UserId: userId }
   })
     .then((todos) => {
-      return res.render('index', { todos: todos })
+      return res.render('index', { todos })
     })
     .catch((error) => res.status(422).json(error))
 })
