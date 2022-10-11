@@ -10,7 +10,7 @@
 -  每筆待辦事項可勾選是否己處理。
 
 ## 遠端 heroku
-  https://todo-list-sequelize.herokuapp.com/users/login
+  https://todo-list-pg.herokuapp.com/users/login
 ## 啓動方式
 
 - 將專案 clone 到本地端
