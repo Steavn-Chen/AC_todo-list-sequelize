@@ -10,7 +10,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express()
-const PORT = 3000
+const port = process.env.PORT || 3000
+const BASE_URL = process.env.BASE_URL || `http://localhost:${port}`
 const usePassport = require('./config/passport')
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }))
@@ -39,6 +40,6 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(PORT, () => {
-  console.log(`Todo-List App is running on http://localhost:${PORT}`)
+app.listen(port, () => {
+  console.log(`Todo-List App is running on ${BASE_URL}`)
 })
