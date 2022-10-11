@@ -1,7 +1,7 @@
 # Todo List 待辦事項表
 使用 Node.js Express 開發待事項清單，此項目主要讓使用者對自己要做的事項做一個記錄與提醒。
 
-![restaurant-image](https://github.com/Steavn-Chen/Todo-List/blob/main/public/image/TodoList%E4%BD%9C%E6%A5%AD.PNG)
+![image](/public/image/TodoList%E4%BD%9C%E6%A5%AD.PNG)
 
 # 功能表單
 
@@ -13,7 +13,7 @@
 
 - 將專案 clone 到本地端
 
-https://github.com/Steavn-Chen/AC_Expense-Teacker
+https://github.com/Steavn-Chen/Todo-List
 
 -  進入到專案資料夾
 ```
