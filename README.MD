@@ -9,6 +9,8 @@
 -  可以新增一筆待辦事項，也可以做修改與刪除。
 -  每筆待辦事項可勾選是否己處理。
 
+## 遠端 heroku
+  https://todo-list-sequelize.herokuapp.com/users/login
 ## 啓動方式
 
 - 將專案 clone 到本地端
